@@ -1,0 +1,141 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// ==============================================================
+// 1. SINGLE INHERITANCE
+
+namespace Single {
+    class Vehicle {
+    public:
+        void showType() { cout << "  I am a Vehicle\n"; }
+    };
+
+    class Car : public Vehicle {          
+    public:
+        void showBrand() { cout << "  Brand: Toyota\n"; }
+    };
+}
+
+// 2. MULTILEVEL INHERITANCE
+
+namespace Multilevel {
+    class LivingThing {
+    public:
+        void breathe() { cout << "  Can breathe\n"; }
+    };
+
+    class Animal : public LivingThing {
+    public:
+        void move() { cout << "  Can move\n"; }
+    };
+
+    class Dog : public Animal {           
+    public:
+        void bark() { cout << "  Can bark\n"; }
+    };
+}
+
+
+// 3. MULTIPLE INHERITANCE
+
+namespace Multiple {
+    class Flyable {
+    public:
+        void fly() { cout << "  Can fly\n"; }
+    };
+
+    class Swimmable {
+    public:
+        void swim() { cout << "  Can swim\n"; }
+    };
+
+    class Duck : public Flyable, public Swimmable {   
+    public:
+        void quack() { cout << "  Can quack\n"; }
+    };
+}
+
+
+// 4. HIERARCHICAL INHERITANCE
+
+namespace Hierarchical {
+    class Shape {
+    public:
+        void draw() { cout << "  Drawing a shape\n"; }
+    };
+
+    class Circle  : public Shape { public: void info() { cout << "  I am a Circle\n";    } };
+    class Square  : public Shape { public: void info() { cout << "  I am a Square\n";    } };
+    class Triangle: public Shape { public: void info() { cout << "  I am a Triangle\n";  } };
+}
+
+
+// 5. HYBRID INHERITANCE  (uses virtual base to avoid diamond problem)
+
+namespace Hybrid {
+    class Person {
+    public:
+        string name;
+        Person(string n = "Unknown") : name(n) {}
+        void showName() { cout << "  Name: " << name << "\n"; }
+    };
+
+    // virtual inheritance prevents two copies of Person in FacultyStudent
+    class Student : virtual public Person {
+    public:
+        void study() { cout << "  Can study\n"; }
+    };
+
+    class Faculty : virtual public Person {
+    public:
+        void teach() { cout << "  Can teach\n"; }
+    };
+
+    class FacultyStudent : public Student, public Faculty {
+    public:
+        FacultyStudent(string n) { name = n; }   // only ONE Person sub-object
+        void doResearch() { cout << "  Can do research\n"; }
+    };
+}
+
+// ---------- main ----------
+int main() {
+    cout << "===== Types of Inheritance Demo =====\n\n";
+
+    
+    cout << "1. Single Inheritance:\n";
+    Single::Car c;
+    c.showType();
+    c.showBrand();
+
+    
+    cout << "\n2. Multilevel Inheritance:\n";
+    Multilevel::Dog d;
+    d.breathe();
+    d.move();
+    d.bark();
+
+    
+    cout << "\n3. Multiple Inheritance:\n";
+    Multiple::Duck duck;
+    duck.fly();
+    duck.swim();
+    duck.quack();
+
+    
+    cout << "\n4. Hierarchical Inheritance:\n";
+    Hierarchical::Circle  ci; ci.draw(); ci.info();
+    Hierarchical::Square  sq; sq.draw(); sq.info();
+    Hierarchical::Triangle tr; tr.draw(); tr.info();
+
+    
+    cout << "\n5. Hybrid Inheritance (virtual base):\n";
+    Hybrid::FacultyStudent fs("Dr. Smith");
+    fs.showName();       // unambiguous – only one Person
+    fs.study();
+    fs.teach();
+    fs.doResearch();
+
+    return 0;
+}
