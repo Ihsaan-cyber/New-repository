@@ -129,7 +129,7 @@ int main() {
 
     
     cout << "\n--- Part B: Pure virtual / Abstract class ---\n";
-    // Shape s;  // ERROR: cannot instantiate abstract class
+    // Shape s; 
 
     vector<unique_ptr<Shape>> shapes;
     shapes.push_back(make_unique<Circle>   (5.0));
@@ -137,7 +137,7 @@ int main() {
     shapes.push_back(make_unique<Triangle> (3.0, 4.0, 5.0));
 
     for (const auto& s : shapes)
-        s->describe();   // virtual dispatch: calls the right override
+        s->describe();   
 
     cout << "\n--- Part C: Pure virtual with a body ---\n";
     vector<unique_ptr<Animal>> animals;
